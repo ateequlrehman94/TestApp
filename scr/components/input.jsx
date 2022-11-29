@@ -1,24 +1,43 @@
-import { StyleSheet, View, TextInput } from "react-native";
+import { StyleSheet, View, TextInput, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-function Input({ placeHold, isSecure, showIcon, iconName, onIconPress, col }) {
+function Input({
+  placeHold,
+  isSecure,
+  showIcon,
+  iconName,
+  onIconPress,
+  col,
+  txtlabel,
+}) {
   return (
-    <View style={styles.inputcon}>
-      <TextInput
-        style={styles.input}
-        placeholder={placeHold}
-        secureTextEntry={isSecure}
-      />
-      {showIcon === true ? (
-        <Ionicons
-          style={styles.icon}
-          name={iconName}
-          size={20}
-          color={col}
-          onPress={onIconPress}
+    <View>
+      <Text
+        style={{
+          fontWeight: "bold",
+          paddingLeft: 20,
+          //  paddingTop: 10,
+        }}
+      >
+        {txtlabel}
+      </Text>
+      <View style={styles.inputcon}>
+        <TextInput
+          style={styles.input}
+          placeholder={placeHold}
+          secureTextEntry={isSecure}
         />
-      ) : (
-        <View />
-      )}
+        {showIcon === true ? (
+          <Ionicons
+            style={styles.icon}
+            name={iconName}
+            size={20}
+            color={col}
+            onPress={onIconPress}
+          />
+        ) : (
+          <View />
+        )}
+      </View>
     </View>
   );
 }

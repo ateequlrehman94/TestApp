@@ -99,8 +99,23 @@ function Register({ navigation }) {
                   />
                 </View>
                 <View>
-                  <Input placeHold={"User Name"} />
-                  <Input placeHold="Father Name" />
+                  <Input
+                    txtlabel={"Enter Your User Name"}
+                    placeHold={"User Name"}
+                  />
+                  <Input
+                    txtlabel={"Enter Your Father Name"}
+                    placeHold="Father Name"
+                  />
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      paddingLeft: 20,
+                      //  paddingTop: 10,
+                    }}
+                  >
+                    Enter your Email Address
+                  </Text>
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
@@ -122,6 +137,46 @@ function Register({ navigation }) {
                   {errors.email && touched.email && (
                     <Text style={styles.errors}>{errors.email}</Text>
                   )}
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      paddingLeft: 20,
+                      //  paddingTop: 10,
+                    }}
+                  >
+                    Enter your Password
+                  </Text>
+                  <View style={styles.inputCon}>
+                    <TextInput
+                      style={styles.input}
+                      placeholder={"Password"}
+                      onChangeText={handleChange("password")}
+                      onBlur={handleBlur("password")}
+                      secureTextEntry={showpassowrd}
+                      value={values.password}
+                    />
+                    <Ionicons
+                      onPress={() => setshowpassowrd(!showpassowrd)}
+                      style={{
+                        alignSelf: "center",
+                        fontSize: 24,
+                        color: "#4632A1",
+                      }}
+                      name={showpassowrd ? "eye-off-outline" : "eye-outline"}
+                    />
+                  </View>
+                  {errors.password && touched.password && (
+                    <Text style={styles.errors}>{errors.password}</Text>
+                  )}
+                  <Text
+                    style={{
+                      fontWeight: "bold",
+                      paddingLeft: 20,
+                      //  paddingTop: 10,
+                    }}
+                  >
+                    Confirm Password
+                  </Text>
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
@@ -145,13 +200,23 @@ function Register({ navigation }) {
                     <Text style={styles.errors}>{errors.password}</Text>
                   )}
                   <Input
+                    txtlabel={"Enter Contect number"}
                     placeHold="Contact Number"
                     showIcon={true}
                     iconName={!errors.contact ? "checkmark" : "close"}
                     col={!errors.contact ? "#4632A1" : "red"}
                   />
-                  <Input placeHold="Date of Birth" showIcon={true} />
-                  <Input placeHold="Gender" showIcon={true} />
+
+                  <Input
+                    txtlabel={"Date of Birth"}
+                    placeHold="Date of Birth"
+                    showIcon={true}
+                  />
+                  <Input
+                    txtlabel={"Gender"}
+                    placeHold="Gender"
+                    showIcon={true}
+                  />
                 </View>
 
                 <View style={styles.checkbox}>
