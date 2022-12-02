@@ -17,6 +17,7 @@
     "expo": "~46.0.16",
     "expo-checkbox": "~2.2.0",
     "expo-status-bar": "~1.4.0",
+    "firebase": "^7.24.0",
     "formik": "^2.2.9",
     "native": "^0.3.3",
     "react": "18.0.0",
@@ -25,6 +26,7 @@
     "react-icons": "^4.6.0",
     "react-native": "0.69.6",
     "react-native-confetti-cannon": "^1.5.2",
+    "react-native-date-picker": "^4.2.6",
     "react-native-image-picker": "^4.10.1",
     "spring": "^0.0.0",
     "yup": "^0.32.11"

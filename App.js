@@ -13,10 +13,10 @@ function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={register} />
-        <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
+        <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
         <Stack.Screen name="Resetpassword" component={Resetpassword} />
       </Stack.Navigator>
     </NavigationContainer>

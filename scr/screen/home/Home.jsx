@@ -64,7 +64,11 @@ function Home() {
   );
   return (
     <View>
-      <FlatList data={profiledata} renderItem={render_itm}></FlatList>
+      <FlatList
+        numColumns={"1"}
+        data={profiledata}
+        renderItem={render_itm}
+      ></FlatList>
     </View>
   );
 }

@@ -17,11 +17,19 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import { useState } from "react";
 import { Input } from "../../components/input";
 import * as yup from "yup";
+import { firebase } from "../../utils/firebaseConfig";
 
 const teacherimage = require("../register/assets/teacher.png");
 
 function Register({ navigation }) {
-  const Logoutschema = yup.object().shape({
+  // const [username, setuseername] = useState();
+  // const [fathername, setfathername] = useState();
+  // const [uemail, setuemail] = useState();
+  // const [userpassword, setuserpassword] = useState();
+  // const [confirmpassword, setconfpassword] = useState();
+  // const [dateofbirth, setdateofbirth] = useState();
+  // const [Gender, setgender] = useState();
+  const Logoutvalidationschema = yup.object().shape({
     email: yup
       .string()
       .email("Please Enter Valid Email")
@@ -35,11 +43,13 @@ function Register({ navigation }) {
         "Must Contain 6 Characters, \n One Uppercase, \n One Lowercase, \n One Number\n One Special Case Character"
       ),
   });
+  // const img1 = require("../../../assets/pigeon.jpg");
   const image = {
     uri: "https://i.pinimg.com/564x/4b/5f/b6/4b5fb68f3a3f425344f265f970db6ec4.jpg",
   };
   const [showpassowrd, setshowpassowrd] = useState();
   const gotlogi = () => {
+    // firebase.firestore.collection("users");
     navigation.navigate("Login");
   };
   const [showConffeti, setShowConffeti] = useState(false);
@@ -67,12 +77,27 @@ function Register({ navigation }) {
     <ScrollView>
       <View>
         <Formik
-          initialValues={{ email: "", password: "" }}
+          initialValues={{
+            email: "",
+            password: "",
+            firstname: "",
+            lastname: "",
+            DOB: "",
+            Gender: "",
+          }}
           validateOnMount={true}
           onSubmit={(values) => {
-            navigation.navigate("Login");
+            console.log(email, password, firstname, lastname, DOB, Gender);
+            firebase.firestore().collection("Users").doc("Dummyid").set({
+              user_firstname: firstname,
+              user_lastename: lastname,
+              user_emai: email,
+              user_password: password,
+              user_DOB: DOB,
+              User_Gender: gender,
+            });
           }}
-          validationSchema={Logoutschema}
+          validationSchema={Logoutvalidationschema}
         >
           {({
             handleChange,
@@ -99,14 +124,24 @@ function Register({ navigation }) {
                   />
                 </View>
                 <View>
-                  <Input
-                    txtlabel={"Enter Your User Name"}
-                    placeHold={"User Name"}
-                  />
-                  <Input
-                    txtlabel={"Enter Your Father Name"}
-                    placeHold="Father Name"
-                  />
+                  <View style={styles.inputCon}>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("firstname")}
+                      onBlur={handleBlur("firstname")}
+                      placeholder={"First Name"}
+                      value={values.firstname}
+                    />
+                  </View>
+                  <View style={styles.inputCon}>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("lastname")}
+                      onBlur={handleBlur("lastname")}
+                      placeholder={"Last Name"}
+                      value={values.lastname}
+                    />
+                  </View>
                   <Text
                     style={{
                       fontWeight: "bold",
@@ -168,55 +203,24 @@ function Register({ navigation }) {
                   {errors.password && touched.password && (
                     <Text style={styles.errors}>{errors.password}</Text>
                   )}
-                  <Text
-                    style={{
-                      fontWeight: "bold",
-                      paddingLeft: 20,
-                      //  paddingTop: 10,
-                    }}
-                  >
-                    Confirm Password
-                  </Text>
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
-                      placeholder={"Password"}
-                      onChangeText={handleChange("password")}
-                      onBlur={handleBlur("password")}
-                      secureTextEntry={showpassowrd}
-                      value={values.password}
-                    />
-                    <Ionicons
-                      onPress={() => setshowpassowrd(!showpassowrd)}
-                      style={{
-                        alignSelf: "center",
-                        fontSize: 24,
-                        color: "#4632A1",
-                      }}
-                      name={showpassowrd ? "eye-off-outline" : "eye-outline"}
+                      onChangeText={handleChange("DOB")}
+                      onBlur={handleBlur("DOB")}
+                      placeholder={"Date of Birth"}
+                      value={values.DOB}
                     />
                   </View>
-                  {errors.password && touched.password && (
-                    <Text style={styles.errors}>{errors.password}</Text>
-                  )}
-                  <Input
-                    txtlabel={"Enter Contect number"}
-                    placeHold="Contact Number"
-                    showIcon={true}
-                    iconName={!errors.contact ? "checkmark" : "close"}
-                    col={!errors.contact ? "#4632A1" : "red"}
-                  />
-
-                  <Input
-                    txtlabel={"Date of Birth"}
-                    placeHold="Date of Birth"
-                    showIcon={true}
-                  />
-                  <Input
-                    txtlabel={"Gender"}
-                    placeHold="Gender"
-                    showIcon={true}
-                  />
+                  <View style={styles.inputCon}>
+                    <TextInput
+                      style={styles.input}
+                      onChangeText={handleChange("Gender")}
+                      onBlur={handleBlur("Gender")}
+                      placeholder={"Gender"}
+                      value={values.Gender}
+                    />
+                  </View>
                 </View>
 
                 <View style={styles.checkbox}>
@@ -242,7 +246,7 @@ function Register({ navigation }) {
                   ></Button>
 
                   {showConffeti === true ? (
-                    <ConfettiCannon count={200} origin={{ x: -10, y: 0 }} />
+                    <ConfettiCannon count={50} origin={{ x: 150, y: 0 }} />
                   ) : null}
                 </View>
               </ImageBackground>
@@ -259,6 +263,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     height: "100%",
+    width: "100%",
   },
   internalimage: {
     allignSelf: "justify",

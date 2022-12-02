@@ -189,7 +189,8 @@ function Login({ navigation }) {
                   Opens a new tab and acknowledge you've read our Privacy Policy
                 </Text>
                 <Text style={{ textAlign: "center" }} onPress={gotoregister}>
-                  Donot have a account yet signup !
+                  Donot have a account yet{" "}
+                  <Text style={{ fontWeight: "bold" }}>Sign Up</Text> !
                   <Ionicons
                     name={"arrow-forward"}
                     size={24}
