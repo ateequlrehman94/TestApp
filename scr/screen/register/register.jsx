@@ -22,13 +22,12 @@ import { firebase } from "../../utils/firebaseConfig";
 const teacherimage = require("../register/assets/teacher.png");
 
 function Register({ navigation }) {
-  // const [username, setuseername] = useState();
-  // const [fathername, setfathername] = useState();
-  // const [uemail, setuemail] = useState();
-  // const [userpassword, setuserpassword] = useState();
-  // const [confirmpassword, setconfpassword] = useState();
-  // const [dateofbirth, setdateofbirth] = useState();
-  // const [Gender, setgender] = useState();
+  const [firstname, setuseername] = useState();
+  const [lastname, setfathername] = useState();
+  const [email, setemail] = useState();
+  const [password, setpassword] = useState();
+  const [DOB, setDOB] = useState();
+  const [Gender, setGender] = useState();
   const Logoutvalidationschema = yup.object().shape({
     email: yup
       .string()
@@ -87,14 +86,14 @@ function Register({ navigation }) {
           }}
           validateOnMount={true}
           onSubmit={(values) => {
-            console.log(email, password, firstname, lastname, DOB, Gender);
-            firebase.firestore().collection("Users").doc("Dummyid").set({
+            console.log(values);
+            firebase.firestore().collection("Users").doc("00001").set({
               user_firstname: firstname,
               user_lastename: lastname,
               user_emai: email,
               user_password: password,
               user_DOB: DOB,
-              User_Gender: gender,
+              User_Gender: Gender,
             });
           }}
           validationSchema={Logoutvalidationschema}
