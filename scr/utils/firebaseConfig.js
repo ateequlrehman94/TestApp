@@ -1,4 +1,4 @@
-import * as firebase from "firebase/app";
+import * as firebase from "firebase";
 import "@firebase/firestore";
 // Optionally import the services that you want to use
 // import {...} from "firebase/auth";

@@ -9,6 +9,7 @@ import {
   TextInput,
   ScrollView,
   ImageBackground,
+  TouchableOpacity,
 } from "react-native";
 import { Formik } from "formik";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -18,6 +19,7 @@ import { useState } from "react";
 import { Input } from "../../components/input";
 import * as yup from "yup";
 import { firebase } from "../../utils/firebaseConfig";
+import { MediaPicker } from "../../components/mediapickermodel";
 
 const teacherimage = require("../register/assets/teacher.png");
 
@@ -77,10 +79,10 @@ function Register({ navigation }) {
       <View>
         <Formik
           initialValues={{
-            email: "",
-            password: "",
             firstname: "",
             lastname: "",
+            email: "",
+            password: "",
             DOB: "",
             Gender: "",
           }}
@@ -88,12 +90,12 @@ function Register({ navigation }) {
           onSubmit={(values) => {
             console.log(values);
             firebase.firestore().collection("Users").doc("00001").set({
-              user_firstname: firstname,
-              user_lastename: lastname,
-              user_emai: email,
-              user_password: password,
-              user_DOB: DOB,
-              User_Gender: Gender,
+              firstname: values.firstname,
+              lastname: values.lastname,
+              email: values.email,
+              password: values.password,
+              DOB: values.DOB,
+              Gender: values.Gender,
             });
           }}
           validationSchema={Logoutvalidationschema}
@@ -114,14 +116,16 @@ function Register({ navigation }) {
                     Create New Account
                   </Text>
                 </View>
-                <View style={styles.logo}>
-                  <Image
-                    style={styles.tinyLogo}
-                    source={{
-                      uri: "https://reactnative.dev/img/tiny_logo.png",
-                    }}
-                  />
-                </View>
+                <TouchableOpacity>
+                  <View style={{ alignItems: "center" }}>
+                    <Image
+                      style={styles.tinyLogo}
+                      source={{
+                        uri: "https://firebasestorage.googleapis.com/v0/b/test-backend-d23a8.appspot.com/o/DS%20%20%20%20CF3856%20copy.JPG?alt=media&token=da89fce0-1b4c-400b-be71-a0fdf4e52cc7",
+                      }}
+                    />
+                  </View>
+                </TouchableOpacity>
                 <View>
                   <View style={styles.inputCon}>
                     <TextInput
@@ -221,7 +225,6 @@ function Register({ navigation }) {
                     />
                   </View>
                 </View>
-
                 <View style={styles.checkbox}>
                   <Checkbox value={false} color={"#3aafa9"} />
                   <Text style={{ margin: 5 }}>
@@ -253,6 +256,7 @@ function Register({ navigation }) {
           )}
         </Formik>
       </View>
+      <MediaPicker />
     </ScrollView>
   );
 }
@@ -265,20 +269,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   internalimage: {
-    allignSelf: "justify",
     marginTop: 40,
     marginBottom: 20,
-    marginLeft: 100,
+    alignItems: "center",
   },
   tinyLogo: {
     allignSelf: "center",
-    borderRadius: 30,
-    marginBottom: 20,
-    marginLeft: 150,
-    width: 70,
-    height: 70,
+    borderRadius: 50,
+    width: 100,
+    height: 100,
+    backgroundColor: "white",
   },
-  logo: {},
   inputCon: {
     paddingHorizontal: 20,
     height: 50,
