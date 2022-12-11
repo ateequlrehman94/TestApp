@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { useState } from "react";
 
 function MediaPicker({
   show,
@@ -9,6 +10,25 @@ function MediaPicker({
   onCameraPressed,
   onImagePickerSelected,
 }) {
+  const pickImageFromGallery = () => {
+    ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      quality: 1,
+    })
+      .then((response) => {
+        // when users opens the picker and just comes back and does not select the image
+        if (response.cancelled) {
+          alert("not selected");
+        } else {
+          onImagePickerSelected(response.assets[0]);
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
   return (
     <View>
       <Modal
@@ -16,7 +36,7 @@ function MediaPicker({
         animationIn={"slideInUp"}
         animationOut={"slideOutDown"}
         animationOutTiming={1500}
-        isVisible={true}
+        isVisible={show}
       >
         <View
           style={{
@@ -28,13 +48,8 @@ function MediaPicker({
           }}
         >
           <View justifyContent={"flex-end"}>
-            <TouchableOpacity>
-              <Ionicons
-                name={"close"}
-                size={30}
-                color={"black"}
-                onPress={onClose}
-              />
+            <TouchableOpacity onPress={onClose}>
+              <Ionicons name={"close"} size={30} color={"black"} />
             </TouchableOpacity>
           </View>
           <View
@@ -49,7 +64,7 @@ function MediaPicker({
 
             <TouchableOpacity
               style={styles.circleView}
-              //   onPress={pickImageFromGallery}
+              onPress={pickImageFromGallery}
             >
               <Ionicons name={"images-sharp"} size={40} color={"white"} />
             </TouchableOpacity>

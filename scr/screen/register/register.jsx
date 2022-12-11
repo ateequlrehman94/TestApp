@@ -30,6 +30,10 @@ function Register({ navigation }) {
   const [password, setpassword] = useState();
   const [DOB, setDOB] = useState();
   const [Gender, setGender] = useState();
+  const [isCameraShown, setIsCameraShown] = useState(false);
+  const [imageFromPicker, setImageFromPicker] = useState("");
+  const [imageFromCamera, setImageFromCamera] = useState("");
+  const [showLoading, setShowLoading] = useState(false);
   const Logoutvalidationschema = yup.object().shape({
     email: yup
       .string()
@@ -48,6 +52,18 @@ function Register({ navigation }) {
   const image = {
     uri: "https://i.pinimg.com/564x/4b/5f/b6/4b5fb68f3a3f425344f265f970db6ec4.jpg",
   };
+  const [isPickerShown, setIsPickerShown] = useState(false);
+
+  const onImagePressed = () => {
+    if (isPickerShown === true) {
+      setIsPickerShown(false);
+    } else if (isPickerShown === false) {
+      setIsPickerShown(true);
+    }
+    // lin51  does the same sa all from 45 to 49
+    // setIsPickerShown(!isPickerShown)
+  };
+
   const [showpassowrd, setshowpassowrd] = useState();
   const gotlogi = () => {
     // firebase.firestore.collection("users");
@@ -60,6 +76,10 @@ function Register({ navigation }) {
     } else if (showConffeti === false) {
       setShowConffeti(true);
     }
+  };
+  const onImageCameFromGallery = (image) => {
+    setImageFromPicker(image.uri);
+    setIsPickerShown(false);
   };
   const gotoalert = () =>
     Alert.alert(
@@ -116,14 +136,16 @@ function Register({ navigation }) {
                     Create New Account
                   </Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={onImagePressed}>
                   <View style={{ alignItems: "center" }}>
-                    <Image
-                      style={styles.tinyLogo}
-                      source={{
-                        uri: "https://firebasestorage.googleapis.com/v0/b/test-backend-d23a8.appspot.com/o/DS%20%20%20%20CF3856%20copy.JPG?alt=media&token=da89fce0-1b4c-400b-be71-a0fdf4e52cc7",
-                      }}
-                    />
+                    <View style={styles.tinyLogo}>
+                      {/* <Ionicons name={"camera"} size={100} color={"black"} /> */}
+                      <Image
+                        source={{ uri: imageFromPicker }}
+                        style={{ width: 100, height: 100, borderRadius: 50 }}
+                        resizeMode={"contain"}
+                      />
+                    </View>
                   </View>
                 </TouchableOpacity>
                 <View>
@@ -256,7 +278,13 @@ function Register({ navigation }) {
           )}
         </Formik>
       </View>
-      <MediaPicker />
+      <MediaPicker
+        show={isPickerShown}
+        onClose={onImagePressed}
+        onImagePickerSelected={(imageSelcted) => {
+          onImageCameFromGallery(imageSelcted);
+        }}
+      />
     </ScrollView>
   );
 }
@@ -278,7 +306,6 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 100,
     height: 100,
-    backgroundColor: "white",
   },
   inputCon: {
     paddingHorizontal: 20,
