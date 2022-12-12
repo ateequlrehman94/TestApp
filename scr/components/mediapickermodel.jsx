@@ -20,7 +20,7 @@ function MediaPicker({
         if (response.cancelled) {
           alert("not selected");
         } else {
-          onImagePickerSelected(response.assets[0]);
+          onImagePickerSelected(response);
         }
       })
       .catch((error) => {
