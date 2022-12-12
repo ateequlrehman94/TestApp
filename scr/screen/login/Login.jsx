@@ -16,6 +16,7 @@ import { useState } from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
 import { Body } from "cannon";
+import { Loading } from "../../components/loading";
 const Loginschema = yup.object().shape({
   email: yup
     .string()
@@ -33,6 +34,7 @@ const Loginschema = yup.object().shape({
 
 function Login({ navigation }) {
   const [showpassowrd, setshowpassowrd] = useState();
+  const [showloading, setshowloading] = useState(true);
   const [rememberme, setrememberme] = useState(false);
   const image = {
     uri: "https://i.pinimg.com/564x/4b/5f/b6/4b5fb68f3a3f425344f265f970db6ec4.jpg",
@@ -202,6 +204,7 @@ function Login({ navigation }) {
           )}
         </Formik>
       </View>
+      {showloading === true && <Loading />}
     </ScrollView>
   );
 }
