@@ -2,7 +2,6 @@ import { View, Text, StyleSheet, TouchableOpacity, Button } from "react-native";
 import Modal from "react-native-modal";
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
-import { useState } from "react";
 
 function MediaPicker({
   show,
@@ -57,7 +56,7 @@ function MediaPicker({
           >
             <TouchableOpacity
               style={styles.circleView}
-              // onPress={onCameraPressed}
+              onPress={onCameraPressed}
             >
               <Ionicons name={"camera-sharp"} size={40} color={"white"} />
             </TouchableOpacity>

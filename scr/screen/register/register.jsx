@@ -20,6 +20,7 @@ import { Input } from "../../components/input";
 import * as yup from "yup";
 import { firebase } from "../../utils/firebaseConfig";
 import { MediaPicker } from "../../components/mediapickermodel";
+import { CustomCamera } from "../../components/customCamera";
 
 const teacherimage = require("../register/assets/teacher.png");
 
@@ -139,9 +140,8 @@ function Register({ navigation }) {
                 <TouchableOpacity onPress={onImagePressed}>
                   <View style={{ alignItems: "center" }}>
                     <View style={styles.tinyLogo}>
-                      {/* <Ionicons name={"camera"} size={100} color={"black"} /> */}
                       <Image
-                        source={{ uri: imageFromPicker }}
+                        source={{ uri: imageFromPicker || imageFromCamera }}
                         style={{ width: 100, height: 100, borderRadius: 50 }}
                         resizeMode={"contain"}
                       />
@@ -284,6 +284,19 @@ function Register({ navigation }) {
         onImagePickerSelected={(imageSelcted) => {
           onImageCameFromGallery(imageSelcted);
         }}
+        onCameraPressed={() => {
+          setIsCameraShown(!isCameraShown);
+        }}
+      />
+      <CustomCamera
+        show={isCameraShown}
+        onClose={() => setIsCameraShown(false)}
+        onPictureTaken={(response) => {
+          setIsCameraShown(false);
+          setIsPickerShown(false);
+          // if image came it will add the uri in our state
+          setImageFromCamera(response.uri);
+        }}
       />
     </ScrollView>
   );
@@ -306,6 +319,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: 100,
     height: 100,
+    color: "black",
   },
   inputCon: {
     paddingHorizontal: 20,
