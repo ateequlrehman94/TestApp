@@ -18,9 +18,12 @@ import ConfettiCannon from "react-native-confetti-cannon";
 import { useState } from "react";
 import { Input } from "../../components/input";
 import * as yup from "yup";
-import { firebase } from "../../utils/firebaseConfig";
+import { firebase } from "../../services/firebaseConfig";
 import { MediaPicker } from "../../components/mediapickermodel";
 import { CustomCamera } from "../../components/customCamera";
+import { getARandomImageName } from "../../utils/imageRendomNumber";
+import { uploadImage } from "../../services/uploadImageFirebase";
+import { makeBlob } from "../../services/uploadImageFirebase";
 
 const teacherimage = require("../register/assets/teacher.png");
 
@@ -110,14 +113,15 @@ function Register({ navigation }) {
           validateOnMount={true}
           onSubmit={(values) => {
             console.log(values);
-            firebase.firestore().collection("Users").doc("00001").set({
-              firstname: values.firstname,
-              lastname: values.lastname,
-              email: values.email,
-              password: values.password,
-              DOB: values.DOB,
-              Gender: values.Gender,
-            });
+            // firebase.firestore().collection("Users").doc("00001").set({
+            //   firstname: values.firstname,
+            //   lastname: values.lastname,
+            //   email: values.email,
+            //   password: values.password,
+            //   DOB: values.DOB,
+            //   Gender: values.Gender,
+            // });
+            uploadImage(imageFromCamera || imageFromPicker);
           }}
           validationSchema={Logoutvalidationschema}
         >
