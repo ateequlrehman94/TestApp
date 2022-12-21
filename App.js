@@ -8,12 +8,13 @@ import register from "./scr/screen/register/register";
 import Forgetpassword from "./scr/screen/forgetpassword/Forgetpassword";
 import Resetpassword from "./scr/screen/Resetpassword/Resetpassword";
 import Home from "./scr/screen/home/Home";
+import Loginn from "./scr/screen/login/Loginn";
 const Stack = createNativeStackNavigator();
 function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Login" component={Loginn} />
         <Stack.Screen name="Register" component={register} />
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Forgetpassword" component={Forgetpassword} />

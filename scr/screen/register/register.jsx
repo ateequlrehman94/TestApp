@@ -16,7 +16,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import React, { Component } from "react";
 import ConfettiCannon from "react-native-confetti-cannon";
 import { useState } from "react";
-import { Input } from "../../components/input";
+import Toast from "react-native-toast-message";
 import * as yup from "yup";
 import { firebase } from "../../services/firebaseConfig";
 import { MediaPicker } from "../../components/mediapickermodel";
@@ -24,16 +24,12 @@ import { CustomCamera } from "../../components/customCamera";
 import { getARandomImageName } from "../../utils/imageRendomNumber";
 import { uploadImage } from "../../services/uploadImageFirebase";
 import { makeBlob } from "../../services/uploadImageFirebase";
+import { Loading } from "../../components/loading";
+import { showToast } from "../../utils/toast";
 
 const teacherimage = require("../register/assets/teacher.png");
 
 function Register({ navigation }) {
-  const [firstname, setuseername] = useState();
-  const [lastname, setfathername] = useState();
-  const [email, setemail] = useState();
-  const [password, setpassword] = useState();
-  const [DOB, setDOB] = useState();
-  const [Gender, setGender] = useState();
   const [isCameraShown, setIsCameraShown] = useState(false);
   const [imageFromPicker, setImageFromPicker] = useState("");
   const [imageFromCamera, setImageFromCamera] = useState("");
@@ -53,7 +49,7 @@ function Register({ navigation }) {
       ),
   });
   // const img1 = require("../../../assets/pigeon.jpg");
-  const image = {
+  const img = {
     uri: "https://i.pinimg.com/564x/4b/5f/b6/4b5fb68f3a3f425344f265f970db6ec4.jpg",
   };
   const [isPickerShown, setIsPickerShown] = useState(false);
@@ -98,44 +94,118 @@ function Register({ navigation }) {
       ],
       { cancelable: true }
     );
+
   return (
-    <ScrollView>
-      <View>
-        <Formik
-          initialValues={{
-            firstname: "",
-            lastname: "",
-            email: "",
-            password: "",
-            DOB: "",
-            Gender: "",
-          }}
-          validateOnMount={true}
-          onSubmit={(values) => {
-            console.log(values);
-            // firebase.firestore().collection("Users").doc("00001").set({
-            //   firstname: values.firstname,
-            //   lastname: values.lastname,
-            //   email: values.email,
-            //   password: values.password,
-            //   DOB: values.DOB,
-            //   Gender: values.Gender,
-            // });
-            uploadImage(imageFromCamera || imageFromPicker);
-          }}
-          validationSchema={Logoutvalidationschema}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            touched,
-            isValid,
-            errors,
-          }) => (
-            <View>
-              <ImageBackground source={image} style={styles.image}>
+    <ImageBackground source={img} style={styles.image}>
+      <ScrollView>
+        <View>
+          <Formik
+            initialValues={{
+              name: "",
+              IDCard: "",
+              email: "",
+              password: "",
+              phoneNumber: "",
+              Gender: "",
+            }}
+            validateOnMount={true}
+            onSubmit={(values) => {
+              console.log(values);
+              const saveUserDataToFireStore = (uid, imageUrlOnServer) => {
+                firebase
+                  .firestore()
+                  .collection("users")
+                  .doc(uid)
+                  .set({
+                    phoneNumber: values.phoneNumber,
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                    IDCard: values.IDCard,
+                    Gender: values.Gender,
+                    profile_url: imageUrlOnServer,
+                  })
+                  .then((response) => {
+                    setShowLoading(false);
+                    navigation.goBack();
+                    showToast(
+                      "success",
+                      "Registered successfully proceed to login",
+                      "top"
+                    );
+                  })
+                  .catch((error) => {
+                    showToast("error", error.message, "top");
+                    setShowLoading(false);
+                  });
+              };
+
+              function uploadImage(uid) {
+                const imageUri = imageFromCamera || imageFromPicker;
+
+                makeBlob(imageUri)
+                  .then((imageBlob) => {
+                    const userStorageRef = firebase.storage().ref("users/");
+                    const imageName = getARandomImageName();
+                    userStorageRef
+                      .child(imageName)
+                      .put(imageBlob)
+                      .then((uploadResponse) => {
+                        // will fetch uploaded image url for us
+                        firebase
+                          .storage()
+                          .ref("users/" + imageName)
+                          .getDownloadURL()
+                          .then((downloadRes) => {
+                            const imageUrlOnServer = downloadRes;
+
+                            // passing the UID and url to add data to firestore function
+                            saveUserDataToFireStore(uid, imageUrlOnServer);
+                          })
+                          .catch((downlaodErr) => {
+                            showToast("error", downlaodErr.message);
+                            setShowLoading(false);
+                          });
+
+                        // get the url from response and then add it with the data to firebase with uid
+                      })
+                      .catch((uploadError) => {
+                        showToast("error", uploadError.message);
+                        setShowLoading(false);
+                      });
+                  })
+                  .catch((blobError) => {
+                    setShowLoading(false);
+                  });
+              }
+              setShowLoading(true);
+              firebase
+                .auth()
+                .createUserWithEmailAndPassword(values.email, values.password)
+                .then((authResponse) => {
+                  if (authResponse.user.uid) {
+                    const uid = authResponse.user.uid;
+                    uploadImage(uid);
+                    //UPLOAD AN IMAGE PROCESS
+                  }
+                })
+                .catch((authError) => {
+                  setShowLoading(false);
+                  showToast("error", authError.message, "top");
+                });
+            }}
+            validationSchema={Logoutvalidationschema}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              touched,
+              isValid,
+              errors,
+            }) => (
+              <View>
                 <View style={styles.internalimage}>
                   <Text style={{ fontWeight: "bold", fontSize: 20 }}>
                     Create New Account
@@ -156,22 +226,22 @@ function Register({ navigation }) {
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
-                      onChangeText={handleChange("firstname")}
-                      onBlur={handleBlur("firstname")}
-                      placeholder={"First Name"}
-                      value={values.firstname}
+                      onChangeText={handleChange("name")}
+                      onBlur={handleBlur("name")}
+                      placeholder={"Name"}
+                      value={values.name}
                     />
                   </View>
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
-                      onChangeText={handleChange("lastname")}
-                      onBlur={handleBlur("lastname")}
-                      placeholder={"Last Name"}
-                      value={values.lastname}
+                      onChangeText={handleChange("IDCard")}
+                      onBlur={handleBlur("IDCard")}
+                      placeholder={"ID Card"}
+                      value={values.IDCard}
                     />
                   </View>
-                  <Text
+                  {/* <Text
                     style={{
                       fontWeight: "bold",
                       paddingLeft: 20,
@@ -179,7 +249,7 @@ function Register({ navigation }) {
                     }}
                   >
                     Enter your Email Address
-                  </Text>
+                  </Text> */}
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
@@ -201,7 +271,7 @@ function Register({ navigation }) {
                   {errors.email && touched.email && (
                     <Text style={styles.errors}>{errors.email}</Text>
                   )}
-                  <Text
+                  {/* <Text
                     style={{
                       fontWeight: "bold",
                       paddingLeft: 20,
@@ -209,7 +279,7 @@ function Register({ navigation }) {
                     }}
                   >
                     Enter your Password
-                  </Text>
+                  </Text> */}
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
@@ -235,10 +305,10 @@ function Register({ navigation }) {
                   <View style={styles.inputCon}>
                     <TextInput
                       style={styles.input}
-                      onChangeText={handleChange("DOB")}
-                      onBlur={handleBlur("DOB")}
-                      placeholder={"Date of Birth"}
-                      value={values.DOB}
+                      onChangeText={handleChange("phoneNumber")}
+                      onBlur={handleBlur("phoneNumber")}
+                      placeholder={"phone Number"}
+                      value={values.phoneNumber}
                     />
                   </View>
                   <View style={styles.inputCon}>
@@ -277,32 +347,34 @@ function Register({ navigation }) {
                     <ConfettiCannon count={50} origin={{ x: 150, y: 0 }} />
                   ) : null}
                 </View>
-              </ImageBackground>
-            </View>
-          )}
-        </Formik>
-      </View>
-      <MediaPicker
-        show={isPickerShown}
-        onClose={onImagePressed}
-        onImagePickerSelected={(imageSelcted) => {
-          onImageCameFromGallery(imageSelcted);
-        }}
-        onCameraPressed={() => {
-          setIsCameraShown(!isCameraShown);
-        }}
-      />
-      <CustomCamera
-        show={isCameraShown}
-        onClose={() => setIsCameraShown(false)}
-        onPictureTaken={(response) => {
-          setIsCameraShown(false);
-          setIsPickerShown(false);
-          // if image came it will add the uri in our state
-          setImageFromCamera(response.uri);
-        }}
-      />
-    </ScrollView>
+              </View>
+            )}
+          </Formik>
+        </View>
+        <MediaPicker
+          show={isPickerShown}
+          onClose={onImagePressed}
+          onImagePickerSelected={(imageSelcted) => {
+            onImageCameFromGallery(imageSelcted);
+          }}
+          onCameraPressed={() => {
+            setIsCameraShown(!isCameraShown);
+          }}
+        />
+        <CustomCamera
+          show={isCameraShown}
+          onClose={() => setIsCameraShown(false)}
+          onPictureTaken={(response) => {
+            setIsCameraShown(false);
+            setIsPickerShown(false);
+            // if image came it will add the uri in our state
+            setImageFromCamera(response.uri);
+          }}
+        />
+        {showLoading && <Loading />}
+        <Toast />
+      </ScrollView>
+    </ImageBackground>
   );
 }
 export default Register;

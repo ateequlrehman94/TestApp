@@ -4,12 +4,12 @@ import LottieView from "lottie-react-native";
 function Loading() {
   return (
     <View style={styles.mainCon}>
-      <ActivityIndicator />
-      {/* <LottieView
-        source={require("../../assets/animations/loading_animation.json")}
+      <ActivityIndicator size={"large"} color={"blue"} />
+      <LottieView
+        source={require("../../assets/Loading_animat/Education Lottie.json")}
         autoPlay
         loop
-      /> */}
+      />
     </View>
   );
 }

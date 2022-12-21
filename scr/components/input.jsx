@@ -11,15 +11,9 @@ function Input({
 }) {
   return (
     <View>
-      <Text
-        style={{
-          fontWeight: "bold",
-          paddingLeft: 20,
-          //  paddingTop: 10,
-        }}
-      >
-        {txtlabel}
-      </Text>
+      <View>
+        <Text style={styles.inputtxtlabel}> {txtlabel}</Text>
+      </View>
       <View style={styles.inputcon}>
         <TextInput
           style={styles.input}
@@ -51,6 +45,11 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginVertical: 10,
     flexDirection: "row",
+  },
+  inputtxtlabel: {
+    fontWeight: "bold",
+    fontSize: 18,
+    marginLeft: 10,
   },
   input: {
     width: "95%",
