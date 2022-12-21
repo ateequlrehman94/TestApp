@@ -43,9 +43,12 @@ function Loginn({ navigation }) {
   });
   const loggedIn = getUserLoggedInStatus();
   const UID = getUserId();
+  const img = require("../../../assets/pigeon.jpg");
 
   const [showpassowrd, setshowpassowrd] = useState();
-
+  const gotoregister = () => {
+    navigation.navigate("Register");
+  };
   return (
     <ImageBackground
       source={{
@@ -102,17 +105,13 @@ function Loginn({ navigation }) {
               <View>
                 <View style={styles.internalimage}>
                   <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                    Create New Account
+                    Welcome to Log In
                   </Text>
                 </View>
                 <TouchableOpacity>
                   <View style={{ alignItems: "center" }}>
                     <View style={styles.tinyLogo}>
-                      <Image
-                        source={{
-                          uri: "https://reactnative.dev/img/tiny_logo.png",
-                        }}
-                      />
+                      <Image source={{ img }} />
                     </View>
                   </View>
                 </TouchableOpacity>
@@ -178,6 +177,18 @@ function Loginn({ navigation }) {
               </View>
             )}
           </Formik>
+        </View>
+        <View>
+          <Text style={{ textAlign: "center", margin: 15 }}>
+            By continuing, you agree our's
+            <Text style={{ fontWeight: "bold" }}>Terms of Service ;</Text>
+            Opens a new tab and acknowledge you've read our Privacy Policy
+          </Text>
+          <Text style={{ textAlign: "center" }} onPress={gotoregister}>
+            Donot have a account yet{" "}
+            <Text style={{ fontWeight: "bold" }}>Sign Up</Text> !
+            <Ionicons name={"arrow-forward"} size={24} color={"#ff4931"} />
+          </Text>
         </View>
         {showLoading && <Loading />}
         <Toast />
