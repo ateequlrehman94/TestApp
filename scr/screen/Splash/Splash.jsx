@@ -14,7 +14,7 @@ function Splash({ navigation }) {
    */
   useEffect(() => {
     // to wait for  atime we use power of timeout
-    setTimeout(loadAfterTime, 10000);
+    setTimeout(loadAfterTime, 3000);
   }, []);
 
   return (

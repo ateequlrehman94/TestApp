@@ -74,9 +74,9 @@ function Loginn({ navigation }) {
                 .then((authResponse) => {
                   setShowLoading(false);
 
-                  const userUid = authResponse.user.uid;
+                  // const userUid = authResponse.user.uid;
 
-                  storeUserSession(userUid, "true");
+                  // storeUserSession(userUid, "true");
 
                   navigation.navigate("Home");
                   showToast(

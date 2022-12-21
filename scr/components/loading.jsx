@@ -6,7 +6,7 @@ function Loading() {
     <View style={styles.mainCon}>
       <ActivityIndicator size={"large"} color={"blue"} />
       <LottieView
-        source={require("../../assets/Loading_animat/Education Lottie.json")}
+        source={require("../../assets/Loading_animat/glassmorphism-ellipse-lottie-animation.json")}
         autoPlay
         loop
       />
