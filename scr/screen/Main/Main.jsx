@@ -3,8 +3,11 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
   ImageBackground,
   FlatList,
+  ScrollView,
+  SafeAreaView,
 } from "react-native";
 import Toast from "react-native-toast-message";
 import { FloatingAction } from "react-native-floating-action";
@@ -39,10 +42,10 @@ function Main() {
     const student = item.data();
     return (
       <View>
-        <ImageBackground
-          style={{ width: 100, height: 100, margin: 5 }}
+        <Image
+          style={{ width: 300, height: 200, margin: 5 }}
           source={{ uri: student.StudentImageUrl }}
-        ></ImageBackground>
+        ></Image>
         <Text>{student.studentName}</Text>
         <Text>{student.fatherName}</Text>
         <Text>{student.Address}</Text>
@@ -53,12 +56,14 @@ function Main() {
     <View style={{ flex: 1 }}>
       <FlatList
         data={studentData}
-        horizontal={true}
+        horizontal={false}
+        numColumns="1"
         renderItem={__renderItem}
         ListEmptyComponent={<Text>no recipies found </Text>}
         refreshing={showLoading}
         onRefresh={() => fetchstudentFromDB()}
       />
+
       <Toast />
       <FloatingAction
         color={"red"}
