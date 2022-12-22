@@ -8,6 +8,8 @@ function Input({
   onIconPress,
   col,
   txtlabel,
+  onChange,
+  beMultiline,
 }) {
   return (
     <View>
@@ -18,7 +20,9 @@ function Input({
         <TextInput
           style={styles.input}
           placeholder={placeHold}
+          onChangeText={onChange}
           secureTextEntry={isSecure}
+          multiline={beMultiline}
         />
         {showIcon === true ? (
           <Ionicons

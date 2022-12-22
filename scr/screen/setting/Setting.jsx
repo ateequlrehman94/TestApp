@@ -1,9 +1,10 @@
 import { View, Text } from "react-native";
+import { FloatingAction } from "react-native-floating-action";
 
 function Setting() {
   return (
-    <View>
-      <Text>Setting</Text>
+    <View style={{ flex: 1 }}>
+      <FloatingAction></FloatingAction>
     </View>
   );
 }

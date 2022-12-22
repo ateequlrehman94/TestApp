@@ -12,7 +12,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "./scr/screen/Main/Main";
 import { Setting } from "./scr/screen/setting/Setting";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
 function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -36,13 +35,15 @@ function App() {
       <Tab.Screen name={"Setting"} component={Setting} />
     </Tab.Navigator>
   );
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen name="Home" component={Home} />
+
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Login" component={Loginn} />
         <Stack.Screen name="Register" component={register} />
-        <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
         <Stack.Screen name="Resetpassword" component={Resetpassword} />
       </Stack.Navigator>
