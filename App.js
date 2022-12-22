@@ -11,6 +11,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Main from "./scr/screen/Main/Main";
 import { Setting } from "./scr/screen/setting/Setting";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { StudentProfile } from "./scr/screen/student/studentprofile";
 function App() {
   const Stack = createNativeStackNavigator();
   const Tab = createBottomTabNavigator();
@@ -40,8 +41,9 @@ function App() {
       <Stack.Navigator>
         <Stack.Screen name="Splash" component={Splash} />
         <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Login" component={Loginn} />
+        <Stack.Screen name="Loginn" component={Loginn} />
         <Stack.Screen name="Register" component={register} />
+        <Stack.Screen name="StudentProfile" component={StudentProfile} />
         <Stack.Screen name="Forgetpassword" component={Forgetpassword} />
         <Stack.Screen name="Resetpassword" component={Resetpassword} />
       </Stack.Navigator>
