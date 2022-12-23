@@ -19,6 +19,7 @@ import * as yup from "yup";
 import { firebase } from "../../services/firebaseConfig";
 import { Loading } from "../../components/loading";
 import { showToast } from "../../utils/toast";
+import { Cusbutton } from "../../components/cus_button";
 import {
   getUserId,
   storeUserSession,
@@ -43,7 +44,7 @@ function Loginn({ navigation }) {
   });
   const loggedIn = getUserLoggedInStatus();
   const UID = getUserId();
-  const img = require("../../../assets/pigeon.jpg");
+  const img = require("../../../assets/teacher.png");
 
   const [showpassowrd, setshowpassowrd] = useState();
   const gotoregister = () => {
@@ -110,7 +111,7 @@ function Loginn({ navigation }) {
                 </View>
                 <TouchableOpacity>
                   <View style={{ alignItems: "center" }}>
-                    <View style={styles.tinyLogo}>
+                    <View style={styles.imageprofile}>
                       <Image source={{ img }} />
                     </View>
                   </View>
@@ -190,6 +191,10 @@ function Loginn({ navigation }) {
             <Ionicons name={"arrow-forward"} size={24} color={"#ff4931"} />
           </Text>
         </View>
+
+        <Cusbutton bgColor={"#3b5998"} text="Continue with Facebook" />
+        <Cusbutton bgColor="#ff0000" text="Sign in with Google" />
+
         {showLoading && <Loading />}
         <Toast />
       </ScrollView>
@@ -205,16 +210,17 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   internalimage: {
-    marginTop: 40,
+    marginTop: 20,
     marginBottom: 20,
     alignItems: "center",
   },
-  tinyLogo: {
-    allignSelf: "center",
-    borderRadius: 50,
-    width: 100,
-    height: 100,
-    color: "black",
+  imageprofile: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom: 10,
   },
   inputCon: {
     paddingHorizontal: 20,

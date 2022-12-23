@@ -44,20 +44,20 @@ const styles = StyleSheet.create({
   inputcon: {
     paddingHorizontal: 20,
     height: 50,
-    backgroundColor: "rgba(255,255,255,0.8)",
+    // backgroundColor: "rgba(255,255,255,0.8)",
     marginHorizontal: 10,
     borderRadius: 20,
     marginVertical: 10,
     flexDirection: "row",
   },
-  inputtxtlabel: {
-    fontWeight: "bold",
-    fontSize: 18,
-    marginLeft: 10,
-  },
+
   input: {
     width: "95%",
-    borderColor: "#00000",
+  },
+  inputtxtlabel: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginLeft: 10,
   },
   icon: {
     alignSelf: "center",

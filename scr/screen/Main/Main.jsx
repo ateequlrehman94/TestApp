@@ -24,9 +24,7 @@ function Main({ navigation }) {
   useEffect(() => {
     fetchstudentFromDB();
   }, []);
-  const studentprofile = (student, StudentId) => {
-    navigation.navigate("StudentProfile", { stu: student, id: StudentId });
-  };
+
   const fetchstudentFromDB = () => {
     setShowLoading(true);
     firebase
@@ -42,11 +40,15 @@ function Main({ navigation }) {
         setShowLoading(false);
       });
   };
-  const deleteStudent = (StudentId) => {
+  const onStudentLongPress = (student, StudentId) => {
+    Alert.alert("Do You Want to Delete Teacher", student.studentName);
+    {
+      cancelable: true;
+    }
     firebase
       .firestore()
       .collection("Student")
-      .doc()
+      .doc(StudentId)
       .delete()
       .then((response) => {
         showToast("success", "Selected Student deleted");
@@ -55,28 +57,17 @@ function Main({ navigation }) {
         showToast("error", error.message);
       });
   };
-  const onStudentLongPress = (student, StudentId) => {
-    Alert.alert(
-      "Do You Want to Delete student",
-      student.studentName,
-      [
-        {
-          text: "Cancel",
-          onPress: studentprofile,
-        },
-        { text: "OK", onPress: deleteStudent(StudentId) },
-      ],
-      { cancelable: true }
-    );
-  };
-
   const __renderItem = ({ item }) => {
     const student = item.data();
     const StudentId = item.id;
     return (
       <View style={styles.studenttabs}>
         <TouchableOpacity
-          onPress={() => studentprofile(student, StudentId)}
+          onPress={() =>
+            navigation.navigate("StudentProfile", {
+              stu: student,
+            })
+          }
           onLongPress={() => onStudentLongPress(student, StudentId)}
         >
           <Image
@@ -86,8 +77,6 @@ function Main({ navigation }) {
         </TouchableOpacity>
         <View style={styles.formCon}>
           <Text>{student.studentName}</Text>
-          <Text>{student.fatherName}</Text>
-          <Text>{student.Address}</Text>
         </View>
       </View>
     );

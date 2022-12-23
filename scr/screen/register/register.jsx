@@ -206,20 +206,16 @@ function Register({ navigation }) {
               errors,
             }) => (
               <View>
-                <View style={styles.internalimage}>
-                  <Text style={{ fontWeight: "bold", fontSize: 20 }}>
-                    Create New Account
-                  </Text>
+                <View style={{ alignItems: "center" }}>
+                  <Text style={styles.TitleText}>Create New Account</Text>
                 </View>
                 <TouchableOpacity onPress={onImagePressed}>
                   <View style={{ alignItems: "center" }}>
-                    <View style={styles.tinyLogo}>
-                      <Image
-                        source={{ uri: imageFromPicker || imageFromCamera }}
-                        style={{ width: 100, height: 100, borderRadius: 50 }}
-                        resizeMode={"center"}
-                      />
-                    </View>
+                    <Image
+                      style={styles.imageprofile}
+                      source={{ uri: imageFromPicker || imageFromCamera }}
+                      resizeMode={"center"}
+                    />
                   </View>
                 </TouchableOpacity>
                 <View>
@@ -385,17 +381,19 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
   },
-  internalimage: {
-    marginTop: 40,
+  TitleText: {
+    fontSize: 30,
     marginBottom: 20,
-    alignItems: "center",
+    fontWeight: "bold",
+    color: "blue",
   },
-  tinyLogo: {
-    allignSelf: "center",
-    borderRadius: 50,
-    width: 100,
-    height: 100,
-    color: "black",
+  imageprofile: {
+    width: 130,
+    height: 130,
+    borderRadius: 63,
+    borderWidth: 4,
+    borderColor: "white",
+    marginBottom: 10,
   },
   inputCon: {
     paddingHorizontal: 20,

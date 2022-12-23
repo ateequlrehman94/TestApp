@@ -26,6 +26,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   backIcon: {
-    marginLeft: -5,
+    // marginLeft: -5,
   },
 });

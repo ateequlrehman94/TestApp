@@ -1,16 +1,8 @@
 import { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableOpacity,
-  ScrollView,
-} from "react-native";
-function StudentProfile({ navigation, route }) {
-  const [incomingstudent, setincomingstudent] = useState(route.params.stu);
-  // const { stu } = route.params;
-  // const { id } = route.params;
+import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
+function TeacherProfile({ route, navigation }) {
+  const [incomingTeacher, setIncomingTeacher] = useState(route.params.teach);
+  const { stu } = route.params;
   return (
     <ScrollView>
       <View>
@@ -19,63 +11,44 @@ function StudentProfile({ navigation, route }) {
             <Image
               style={styles.avatar}
               source={{
-                uri: incomingstudent.StudentImageUrl,
+                uri: incomingTeacher.TeacherImageUrl,
               }}
             />
 
-            <Text style={styles.pname}>{incomingstudent.studentName}</Text>
+            <Text style={styles.pname}>{incomingTeacher.TeacherName}</Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
+            <Text style={styles.name}>Teacher CNIC:</Text>
+            <Text style={styles.count}> {incomingTeacher.TeacherNIC}</Text>
           </View>
         </View>
 
         <View style={styles.card}>
           <View style={styles.cardContent}>
-            <Text style={styles.name}>Father Name</Text>
-            <Text style={styles.count}>{incomingstudent.fatherName}</Text>
+            <Text style={styles.name}>Sallery:</Text>
+            <Text style={styles.count}>{incomingTeacher.Salery}</Text>
           </View>
         </View>
         <View style={styles.card}>
           <View style={styles.cardContent}>
-            <Text style={styles.name}>Father CNIC</Text>
-            <Text style={styles.count}>{incomingstudent.fatherNIC}</Text>
+            <Text style={styles.name}>Subject:</Text>
+            <Text style={styles.count}>{incomingTeacher.Subject}</Text>
           </View>
         </View>
         <View style={styles.card}>
           <View style={styles.cardContent}>
-            <Text style={styles.name}>Class</Text>
-            <Text style={styles.count}>
-              {incomingstudent.Class}:{incomingstudent.classSection}
-            </Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardContent}>
-            <Text style={styles.name}>Monthly Fee</Text>
-            <Text style={styles.count}>{incomingstudent.Monthlyfee}</Text>
-          </View>
-        </View>
-        <View style={styles.card}>
-          <View style={styles.cardContent}>
-            <Text style={styles.name}>Address</Text>
-            <Text style={styles.count}>{incomingstudent.Address}</Text>
+            <Text style={styles.name}>Address:</Text>
+            <Text style={styles.count}> {incomingTeacher.Address}</Text>
           </View>
         </View>
       </View>
     </ScrollView>
-    /* <View style={styles.container}>
-      <View style={styles.Teacherimage}>
-        <Image source={{ uri: incomingstudent.TeacherImageUrl }}></Image>
-      </View>
-      <Text>PersonalInformation</Text>
-      <View style={styles.Teachertabs}>
-        <Text>Name: {incomingstudent.TeacherName}</Text>
-      </View>
-      <View style={styles.personalinformation}>
-        <Text>Name: {incomingstudent.Address}</Text>
-      </View>
-    </View> */
   );
 }
-export { StudentProfile };
+
+export { TeacherProfile };
 
 const styles = StyleSheet.create({
   header: {
@@ -140,6 +113,7 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: "row",
     borderRadius: 30,
+    alignItems: "center",
   },
 
   name: {

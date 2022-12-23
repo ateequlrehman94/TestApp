@@ -12,31 +12,28 @@ import {
   Text,
 } from "react-native";
 
-import { Loading } from "./loading";
-import { Header } from "./header";
-import { Input } from "./input";
-import { firebase } from "../services/firebaseConfig";
-import { MediaPicker } from "./mediapickermodel";
-import { CustomCamera } from "./customCamera";
-import { makeBlob } from "../services/uploadImageFirebase";
-import { showToast } from "../utils/toast";
+import { Loading } from "../../components/loading";
+import { Header } from "../../components/header";
+import { Input } from "../../components/input";
+import { firebase } from "../../services/firebaseConfig";
+import { MediaPicker } from "../../components/mediapickermodel";
+import { CustomCamera } from "../../components/customCamera";
+import { makeBlob } from "../../services/uploadImageFirebase";
+import { showToast } from "../../utils/toast";
 import { Ionicons } from "@expo/vector-icons";
-import { Cusbutton } from "./cus_button";
 import {
-  getARandomstudentImageName,
-  getARandomstudentName,
-} from "../utils/RandomstudentName";
+  getARandomTeacherImageName,
+  getARandomTeacherName,
+} from "./RandomTeacherName";
+import { Cusbutton } from "../../components/cus_button";
 
-function Addstudent({ onClose, show }) {
-  const [studentName, setstudentName] = useState(" ");
-  const [fatherName, setfatherName] = useState(" ");
-  const [fatherNIC, setfatherNIC] = useState(" ");
-  const [ContactNumber, setContactNumber] = useState(" ");
-  const [Monthlyfee, setMonthlyfee] = useState("");
+function AddTeacher({ onClose, show }) {
+  const [TeacherName, setTeacherName] = useState(" ");
+  const [TeacherNIC, setTeacherNIC] = useState(" ");
+  const [Salery, setSalery] = useState("");
   const [DOB, setDOB] = useState("");
   const [Gender, setGender] = useState("");
-  const [Class, setClass] = useState("");
-  const [classSection, setclassSection] = useState("");
+  const [Subject, setSubject] = useState("");
   const [Address, setAddress] = useState(" ");
 
   const [isPickerShown, setIsPickerShown] = useState(false);
@@ -67,8 +64,8 @@ function Addstudent({ onClose, show }) {
 
     makeBlob(imageUri)
       .then((imageBlob) => {
-        const userStorageRef = firebase.storage().ref("Student/");
-        const imageName = getARandomstudentImageName();
+        const userStorageRef = firebase.storage().ref("Teacher/");
+        const imageName = getARandomTeacherImageName();
         userStorageRef
           .child(imageName)
           .put(imageBlob)
@@ -76,13 +73,13 @@ function Addstudent({ onClose, show }) {
             // will fetch uploaded image url for us
             firebase
               .storage()
-              .ref("Student/" + imageName)
+              .ref("Teacher/" + imageName)
               .getDownloadURL()
               .then((downloadRes) => {
                 const imageUrlOnServer = downloadRes;
 
                 // passing the UID and url to add data to firestore function
-                saveStudentData(imageUrlOnServer);
+                saveTeacherData(imageUrlOnServer);
               })
               .catch((downlaodErr) => {
                 showToast("error", downlaodErr.message);
@@ -100,29 +97,24 @@ function Addstudent({ onClose, show }) {
         setShowLoading(false);
       });
   }
-  const saveStudentData = (imageUrl) => {
-    const randomName = getARandomstudentName();
+  const saveTeacherData = (imageUrl) => {
+    const randomName = getARandomTeacherName();
 
     firebase
       .firestore()
-      .collection("Student")
+      .collection("Teacher")
       .doc(randomName)
       .set({
-        StudentImageUrl: imageUrl,
-        studentName,
-        fatherName,
-        ContactNumber,
-        fatherNIC,
-        Monthlyfee,
-        Class,
-        Gender,
-        DOB,
-        classSection,
+        TeacherImageUrl: imageUrl,
+        TeacherName,
+        TeacherNIC,
         Address,
+        Subject,
+        Salery,
       })
       .then((response) => {
         setShowLoading(false);
-        showToast("success", "Student Record uploaded", "top");
+        showToast("success", "Teacher Record uploaded", "top");
         onClose();
       })
       .catch((error) => {
@@ -139,94 +131,72 @@ function Addstudent({ onClose, show }) {
     >
       <ScrollView Style={{ flex: 1 }}>
         <View>
-          <Header title={"Add New Student"} onIconPress={onClose} />
+          <Header title={"Add New Teacher"} onIconPress={onClose} />
         </View>
-        <View>
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={onImagePressed}
-          >
-            <View style={styles.pickImgCircle}>
-              <Image
-                source={{ uri: imageFromPicker || imageFromCamera }}
-                style={{ width: 100, height: 100, borderRadius: 50 }}
-                resizeMode={"contain"}
-              />
-            </View>
-          </TouchableOpacity>
 
-          <View style={styles.formCon}>
-            <Input
-              txtlabel={"Student Name"}
-              placeHold={"Student Name"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setstudentName}
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          onPress={onImagePressed}
+        >
+          <View style={styles.pickImgCircle}>
+            <Image
+              source={{ uri: imageFromPicker || imageFromCamera }}
+              style={{ width: 100, height: 100, borderRadius: 50 }}
+              resizeMode={"contain"}
             />
-            <Input
-              txtlabel={"Father Name"}
-              placeHold={"Father Name"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setfatherName}
-            />
-            <Input
-              txtlabel={"Father NIC"}
-              placeHold={"Father NIC"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setfatherNIC}
-            />
-            <Input
-              txtlabel={"Phone Number"}
-              placeHold={"Phone Number"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setContactNumber}
-            />
+          </View>
+        </TouchableOpacity>
 
-            <Input
-              txtlabel={"Monthly Fee"}
-              placeHold={"Monthly Fee"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setMonthlyfee}
-            />
-            {/* <Input
+        <View style={styles.formCon}>
+          <Input
+            txtlabel={"Teacher Name"}
+            placeHold={"Teacher Name"}
+            showIcon={true}
+            iconName={"pencil"}
+            onChange={setTeacherName}
+          />
+          <Input
+            txtlabel={"Teacher CNIC"}
+            placeHold={"Teacher CNIC"}
+            showIcon={true}
+            iconName={"pencil"}
+            onChange={setTeacherNIC}
+          />
+          <Input
+            txtlabel={"Address"}
+            placeHold={"Address"}
+            showIcon={true}
+            iconName={"pencil"}
+            onChange={setAddress}
+          />
+          <Input
+            txtlabel={"Subject"}
+            placeHold={"Subject"}
+            showIcon={true}
+            iconName={"pencil"}
+            onChange={setSubject}
+          />
+          <Input
+            txtlabel={"Salery"}
+            placeHold={"Salery"}
+            showIcon={true}
+            iconName={"pencil"}
+            onChange={setSalery}
+          />
+          {/* <Input
               txtlabel={"Date Of Birth"}
               placeHold={"Date Of Birth"}
               showIcon={true}
               iconName={"pencil"}
               onChange={setDOB}
             /> */}
-            <Input
-              txtlabel={"Class"}
-              placeHold={"Class"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setClass}
-            />
-            <Input
-              txtlabel={"Address"}
-              placeHold={"Address"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setAddress}
-            />
-            <Input
-              txtlabel={"Section"}
-              placeHold={"Section"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setclassSection}
-            />
-            <Cusbutton
-              onBottomPress={onSubmit}
-              bgColor={"#3b5998"}
-              textColor={"black"}
-              text={"Add Student"}
-            />
-          </View>
+
+          <Cusbutton
+            onBottomPress={onSubmit}
+            bgColor={"#ff0000"}
+            textColor={"black"}
+            text={"Add Student"}
+          />
 
           <MediaPicker
             show={isPickerShown}
@@ -238,6 +208,7 @@ function Addstudent({ onClose, show }) {
               setIsCameraShown(!isCameraShown);
             }}
           />
+
           <CustomCamera
             show={isCameraShown}
             onClose={() => setIsCameraShown(false)}
@@ -256,7 +227,7 @@ function Addstudent({ onClose, show }) {
   );
 }
 
-export { Addstudent };
+export { AddTeacher };
 
 const styles = StyleSheet.create({
   formCon: {
