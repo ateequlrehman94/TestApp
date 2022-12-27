@@ -69,7 +69,7 @@ function Main({ navigation }) {
       name: "Log Out",
       color: "#20B2AA",
       photo: "https://img.icons8.com/color/70/000000/to-do.png",
-      screenname: "",
+      screenname: "Setting",
     },
   ];
 

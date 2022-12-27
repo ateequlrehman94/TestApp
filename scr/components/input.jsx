@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   inputcon: {
     paddingHorizontal: 20,
     height: 50,
-    // backgroundColor: "rgba(255,255,255,0.8)",
+    backgroundColor: "rgba(255,255,255,0.8)",
     marginHorizontal: 10,
     borderRadius: 20,
     marginVertical: 10,
