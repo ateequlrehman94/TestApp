@@ -12,20 +12,20 @@ import {
   Text,
 } from "react-native";
 
-import { Loading } from "./loading";
-import { Header } from "./header";
-import { Input } from "./input";
-import { firebase } from "../services/firebaseConfig";
-import { MediaPicker } from "./mediapickermodel";
-import { CustomCamera } from "./customCamera";
-import { makeBlob } from "../services/uploadImageFirebase";
-import { showToast } from "../utils/toast";
+import { Loading } from "../../components/loading";
+import { Header } from "../../components/header";
+import { Input } from "../../components/input";
+import { firebase } from "../../services/firebaseConfig";
+import { MediaPicker } from "../../components/mediapickermodel";
+import { CustomCamera } from "../../components/customCamera";
+import { makeBlob } from "../../services/uploadImageFirebase";
+import { showToast } from "../../utils/toast";
 import { Ionicons } from "@expo/vector-icons";
-import { Cusbutton } from "./cus_button";
+import { Cusbutton } from "../../components/cus_button";
 import {
-  getARandomstudentImageName,
+  getARandomImageName,
   getARandomstudentName,
-} from "../utils/RandomstudentName";
+} from "../../utils/imageRendomNumber";
 
 function Addstudent({ onClose, show }) {
   const [studentName, setstudentName] = useState(" ");

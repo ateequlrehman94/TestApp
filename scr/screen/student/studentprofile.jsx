@@ -61,18 +61,6 @@ function StudentProfile({ navigation, route }) {
         </View>
       </View>
     </ScrollView>
-    /* <View style={styles.container}>
-      <View style={styles.Teacherimage}>
-        <Image source={{ uri: incomingstudent.TeacherImageUrl }}></Image>
-      </View>
-      <Text>PersonalInformation</Text>
-      <View style={styles.Teachertabs}>
-        <Text>Name: {incomingstudent.TeacherName}</Text>
-      </View>
-      <View style={styles.personalinformation}>
-        <Text>Name: {incomingstudent.Address}</Text>
-      </View>
-    </View> */
   );
 }
 export { StudentProfile };
