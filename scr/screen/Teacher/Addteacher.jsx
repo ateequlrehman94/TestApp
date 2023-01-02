@@ -161,6 +161,7 @@ function AddTeacher({ onClose, show }) {
             showIcon={true}
             iconName={"pencil"}
             onChange={setTeacherNIC}
+            inputtype={"numeric"}
           />
           <Input
             txtlabel={"Address"}
@@ -182,6 +183,7 @@ function AddTeacher({ onClose, show }) {
             showIcon={true}
             iconName={"pencil"}
             onChange={setSalery}
+            inputtype={"numeric"}
           />
           {/* <Input
               txtlabel={"Date Of Birth"}

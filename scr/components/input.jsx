@@ -1,5 +1,7 @@
 import { StyleSheet, View, TextInput, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import PhoneInput from "react-native-phone-number-input";
+
 function Input({
   placeHold,
   isSecure,
@@ -10,6 +12,7 @@ function Input({
   txtlabel,
   onChange,
   beMultiline,
+  inputtype,
 }) {
   return (
     <View>
@@ -23,6 +26,7 @@ function Input({
           onChangeText={onChange}
           secureTextEntry={isSecure}
           multiline={beMultiline}
+          keyboardType={inputtype}
         />
         {showIcon === true ? (
           <Ionicons

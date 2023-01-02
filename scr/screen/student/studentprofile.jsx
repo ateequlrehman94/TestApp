@@ -49,6 +49,18 @@ function StudentProfile({ navigation, route }) {
         </View>
         <View style={styles.card}>
           <View style={styles.cardContent}>
+            <Text style={styles.name}>Gender</Text>
+            <Text style={styles.count}>{incomingstudent.Gender}</Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
+            <Text style={styles.name}>Contact Number</Text>
+            <Text style={styles.count}>{incomingstudent.ContactNumber}</Text>
+          </View>
+        </View>
+        <View style={styles.card}>
+          <View style={styles.cardContent}>
             <Text style={styles.name}>Monthly Fee</Text>
             <Text style={styles.count}>{incomingstudent.Monthlyfee}</Text>
           </View>

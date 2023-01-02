@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Modal from "react-native-modal";
 import Toast from "react-native-toast-message";
-
+import PhoneInput from "react-native-phone-number-input";
 import {
   View,
   ScrollView,
@@ -22,10 +22,13 @@ import { makeBlob } from "../../services/uploadImageFirebase";
 import { showToast } from "../../utils/toast";
 import { Ionicons } from "@expo/vector-icons";
 import { Cusbutton } from "../../components/cus_button";
+import { RadioButton } from "react-native-paper";
+import { CheckBox, Icon } from "@rneui/themed";
+
 import {
-  getARandomImageName,
+  getARandomstudentImageName,
   getARandomstudentName,
-} from "../../utils/imageRendomNumber";
+} from "../../utils/RandomstudentName";
 
 function Addstudent({ onClose, show }) {
   const [studentName, setstudentName] = useState(" ");
@@ -34,7 +37,7 @@ function Addstudent({ onClose, show }) {
   const [ContactNumber, setContactNumber] = useState(" ");
   const [Monthlyfee, setMonthlyfee] = useState("");
   const [DOB, setDOB] = useState("");
-  const [Gender, setGender] = useState("");
+  const [Gender, setGender] = useState("Male");
   const [Class, setClass] = useState("");
   const [classSection, setclassSection] = useState("");
   const [Address, setAddress] = useState(" ");
@@ -176,12 +179,33 @@ function Addstudent({ onClose, show }) {
               showIcon={true}
               iconName={"pencil"}
               onChange={setfatherNIC}
+              inputtype={"numeric"}
             />
-            <Input
-              txtlabel={"Phone Number"}
-              placeHold={"Phone Number"}
-              showIcon={true}
-              iconName={"pencil"}
+            <Text
+              style={{
+                fontSize: 16,
+                marginLeft: 10,
+                fontWeight: "bold",
+                textColor: "black",
+              }}
+            >
+              Phone Number:
+            </Text>
+
+            <PhoneInput
+              defaultCode="PK"
+              layout="first"
+              withShadow
+              autoFocus
+              containerStyle={{
+                // paddingHorizontal: 20,
+                height: 50,
+                // marginHorizontal: 10,
+                borderRadius: 20,
+                // marginVertical: 10,
+                flexDirection: "row",
+              }}
+              // textContainerStyle={{ paddingVertical: 0 }}
               onChange={setContactNumber}
             />
 
@@ -191,6 +215,7 @@ function Addstudent({ onClose, show }) {
               showIcon={true}
               iconName={"pencil"}
               onChange={setMonthlyfee}
+              inputtype={"numeric"}
             />
             {/* <Input
               txtlabel={"Date Of Birth"}
@@ -199,6 +224,14 @@ function Addstudent({ onClose, show }) {
               iconName={"pencil"}
               onChange={setDOB}
             /> */}
+            <CheckBox
+              center
+              title="Male"
+              checkedIcon="dot-circle-o"
+              uncheckedIcon="circle-o"
+              checked={Gender}
+              onPress={() => setGender(!Gender)}
+            />
             <Input
               txtlabel={"Class"}
               placeHold={"Class"}
@@ -265,7 +298,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderColor: "black",
   },
-
   pickImgCircle: {
     backgroundColor: "orange",
     width: 100,
