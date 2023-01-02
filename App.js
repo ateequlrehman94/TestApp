@@ -1,3 +1,4 @@
+import "react-native-gesture-handler";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -20,35 +21,17 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Search } from "./scr/screen/Search/Search";
 import Student from "./scr/screen/student/Student";
 import { MapArea } from "./scr/components/MapArea";
+import { MyDrawer } from "./scr/screen/Navigation/MyDrawer";
+import CustomSidebarMenu from "./scr/components/CustomSidebarMenu";
+import { Mytab } from "./scr/screen/Navigation/Mytab";
 function App() {
   const Stack = createNativeStackNavigator();
-  const Tab = createBottomTabNavigator();
-  const Drawer = createDrawerNavigator();
-  const iconSize = 18;
 
   const Home = () => (
-    <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false,
-        tabBarIcon: ({ focused }) => (
-          <Ionicons
-            name={
-              route.name === "Main"
-                ? "home"
-                : "Search"
-                ? "search"
-                : "settings-outline"
-            }
-            color={focused ? "red" : "grey"}
-            size={iconSize}
-          />
-        ),
-      })}
-    >
-      <Tab.Screen name={"Main"} component={Main} />
-      <Tab.Screen name={"Search"} component={Search} />
-      <Tab.Screen name={"Setting"} component={Setting} />
-    </Tab.Navigator>
+    <>
+      {/* <Mytab></Mytab> */}
+      <MyDrawer></MyDrawer>
+    </>
   );
 
   return (
@@ -62,7 +45,7 @@ function App() {
             headerTitle: "Home",
             headerTitleAlign: "center",
             headerBackVisible: false,
-            // headerTitleStyle: { color: "white" },
+            headerShown: false, // headerTitleStyle: { color: "white" },
             // headerStyle: { backgroundColor: "blue" },
           }}
         />
@@ -130,13 +113,6 @@ function App() {
         <Stack.Screen
           name="Attandance"
           component={Attandance}
-          options={{
-            headerTitleAlign: "center",
-          }}
-        />
-        <Stack.Screen
-          name="MapArea"
-          component={MapArea}
           options={{
             headerTitleAlign: "center",
           }}
