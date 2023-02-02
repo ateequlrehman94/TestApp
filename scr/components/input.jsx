@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     height: 50,
     backgroundColor: "rgba(255,255,255,0.8)",
     marginHorizontal: 10,
-    borderRadius: 20,
+    // borderRadius: 20,
     marginVertical: 10,
     flexDirection: "row",
   },

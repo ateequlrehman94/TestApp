@@ -67,6 +67,7 @@ function Teacher({ navigation }) {
           onPress={() =>
             navigation.navigate("TeacherProfile", {
               teach: Teacher,
+              tid: TeacherId,
             })
           }
           onLongPress={() => onTeacherLongPress(Teacher, TeacherId)}

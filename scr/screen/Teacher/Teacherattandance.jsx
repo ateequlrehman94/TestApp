@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { TouchableOpacity } from "react-native";
 import {
   View,
   Text,
@@ -8,11 +9,22 @@ import {
   ScrollView,
 } from "react-native";
 import Toast from "react-native-toast-message";
+import { Cusbutton } from "../../components/cus_button";
 import { Loading } from "../../components/loading";
 import { firebase } from "../../services/firebaseConfig";
 function TeacherAttandance({ navigation }) {
   const [showLoading, setShowLoading] = useState(false);
   const [TeacherData, setTeacherData] = useState([]);
+  const [currentDate, setCurrentDate] = useState("");
+  useEffect(() => {
+    setCurrentDate(
+      new Date().getDate() +
+        "/" +
+        (new Date().getMonth() + 1) +
+        "/" +
+        new Date().getFullYear()
+    );
+  }, []);
   useEffect(() => {
     fetchTeacherFromDB();
   }, []);
@@ -29,6 +41,7 @@ function TeacherAttandance({ navigation }) {
       })
       .catch((error) => {
         console.log({ error });
+
         setShowLoading(false);
       });
   };
@@ -36,32 +49,60 @@ function TeacherAttandance({ navigation }) {
   const __renderItem = ({ item }) => {
     const Teacher = item.data();
     const TeacherId = item.id;
+    const Teacheratt = item.data().attendance;
+    console.log({ Teacheratt });
+
     return (
       <ScrollView>
-        <View style={styles.row}>
-          <Image source={{ uri: Teacher.TeacherImageUrl }} style={styles.pic} />
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("CallAttandance", {
+              Teach: Teacher,
+              Tid: TeacherId,
+            })
+          }
+        >
           <View>
-            <View style={styles.nameContainer}>
-              <Text style={styles.nameTxt}>{Teacher.TeacherName}</Text>
-            </View>
-            <View style={styles.end}>
-              <Image
-                style={[
-                  styles.icon,
-                  { marginLeft: 15, marginRight: 5, width: 14, height: 14 },
-                ]}
-                source={{
-                  uri: "https://img.icons8.com/small/14/000000/double-tick.png",
-                }}
-              />
-              <Text style={styles.time}>{Teacher.Subject}</Text>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: "700",
+                color: "#000",
+                marginTop: 20,
+                marginLeft: 20,
+              }}
+            >
+              {"Today Date: " + currentDate}
+            </Text>
+          </View>
+          <View style={styles.row}>
+            <Image
+              source={{ uri: Teacher.TeacherImageUrl }}
+              style={styles.pic}
+            />
+            <View>
+              <View style={styles.nameContainer}>
+                <Text style={styles.nameTxt}>{Teacher.TeacherName}</Text>
+              </View>
+              <View style={styles.end}>
+                <Image
+                  style={[
+                    styles.icon,
+                    { marginLeft: 15, marginRight: 5, width: 14, height: 14 },
+                  ]}
+                  source={{
+                    uri: "https://img.icons8.com/small/14/000000/double-tick.png",
+                  }}
+                />
+                <Text style={styles.time}>{Teacher.Subject}</Text>
+              </View>
+
+              {/* <Text style={styles.nameTxt}>checkIn:{Teacheratt.checkIn}</Text>
+              <Text style={styles.nameTxt}>checkOut:{Teacheratt.checkOut}</Text>
+              <Text style={styles.nameTxt}>date:{Teacheratt.Date}</Text> */}
             </View>
           </View>
-          <Image
-            style={[styles.icon, { marginRight: 50 }]}
-            source={{ uri: Teacher.TeacherImageUrl }}
-          />
-        </View>
+        </TouchableOpacity>
       </ScrollView>
     );
   };

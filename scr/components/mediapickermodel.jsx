@@ -39,33 +39,43 @@ function MediaPicker({
       >
         <View
           style={{
-            height: "20%",
+            height: "30%",
             backgroundColor: "white",
             borderRadius: 10,
             padding: 10,
             justifyContent: "center",
+            borderStyle: "dotted",
           }}
         >
-          <View justifyContent={"flex-end"}>
-            <TouchableOpacity onPress={onClose}>
-              <Ionicons name={"close"} size={30} color={"black"} />
-            </TouchableOpacity>
+          <View style={{ alignItems: "center" }}>
+            <Text style={{ fontSize: 30, fontWeight: "bold" }}>Add Photo</Text>
           </View>
           <View
-            style={{ flexDirection: "row", justifyContent: "space-evenly" }}
+            style={{ flexDirection: "column", justifyContent: "space-evenly" }}
           >
             <TouchableOpacity
               style={styles.circleView}
               onPress={onCameraPressed}
             >
-              <Ionicons name={"camera-sharp"} size={40} color={"white"} />
+              <Ionicons name={"camera-sharp"} size={40} color={"black"}>
+                <Text style={{ fontSize: 20 }}> Take Photo</Text>
+              </Ionicons>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.circleView}
               onPress={pickImageFromGallery}
             >
-              <Ionicons name={"images-sharp"} size={40} color={"white"} />
+              <Ionicons name={"images-sharp"} size={40} color={"black"}>
+                <Text style={{ fontSize: 20, marginLeft: 10 }}>
+                  Chose from Galery
+                </Text>
+              </Ionicons>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={onClose} style={styles.circleView}>
+              {/* <Ionicons name={"close"} size={30} color={"black"}> */}
+              <Text style={{ fontSize: 20, textAlign: "center" }}>CANCEL</Text>
+              {/* </Ionicons> */}
             </TouchableOpacity>
           </View>
 
@@ -80,12 +90,17 @@ function MediaPicker({
 export { MediaPicker };
 const styles = StyleSheet.create({
   circleView: {
-    backgroundColor: "orange",
-    height: 100,
-    width: 100,
-    borderRadius: 50,
-    alignSelf: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "white",
+    height: 40,
+    width: "100%",
+    // margin: 5,
+    borderStyle: "solid",
+    borderWidth: 1,
+    borderColor: "black",
+    marginBottom: 10,
+    // borderRadius: 50,
+    // alignSelf: "center",
+    // alignItems: "center",
+    // justifyContent: "center",
   },
 });

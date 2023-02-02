@@ -41,7 +41,7 @@ function Student({ navigation }) {
       });
   };
   const onStudentLongPress = (student, StudentId) => {
-    Alert.alert("Do You Want to Delete Teacher", student.studentName);
+    Alert.alert("Do You Want to Delete Student", student.studentName);
     {
       cancelable: true;
     }

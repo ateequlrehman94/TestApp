@@ -19,7 +19,7 @@ import { firebase } from "../../services/firebaseConfig";
 import { StudentProfile } from "../student/studentprofile";
 import { Cusbutton } from "../../components/cus_button";
 import Student from "../student/Student";
-import { TeacherAttandance } from "../Attandance/Teacherattandance";
+import { TeacherAttandance } from "../Teacher/Teacherattandance";
 function Main({ navigation }) {
   const profiledata = [
     {

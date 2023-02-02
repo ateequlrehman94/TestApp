@@ -11,7 +11,7 @@ import {
   Button,
   Text,
 } from "react-native";
-
+import { Picker } from "@react-native-picker/picker";
 import { Loading } from "../../components/loading";
 import { Header } from "../../components/header";
 import { Input } from "../../components/input";
@@ -24,16 +24,50 @@ import { Ionicons } from "@expo/vector-icons";
 import { Cusbutton } from "../../components/cus_button";
 import { RadioButton } from "react-native-paper";
 import { CheckBox, Icon } from "@rneui/themed";
-
+import { LinearGradient } from "expo-linear-gradient";
 import {
   getARandomstudentImageName,
   getARandomstudentName,
 } from "../../utils/RandomstudentName";
-
+import { TextInput } from "react-native";
+var genderoption = ["Male", "Female", "Others"];
+var classoption = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "BS",
+  "MS",
+  "PHD",
+];
+var subjectoption = [
+  "SCIENC (BIOLOGY) ",
+  "SCIENCE (COMPUTER SCIENCE)",
+  "INTERMEDIATE (Pre-ENgineering)",
+  "INTERMEDIATE (Pre-Medical)",
+  "INTERMEDIATE (Computer SCience)",
+  "Physics",
+  "Chemistry",
+  "Computer Science",
+  "Information Techonology",
+  "Zology",
+  "Botony",
+  "English",
+  "Statictics",
+];
 function Addstudent({ onClose, show }) {
   const [studentName, setstudentName] = useState(" ");
   const [fatherName, setfatherName] = useState(" ");
   const [fatherNIC, setfatherNIC] = useState(" ");
+  const [countryCode, setCountryCode] = useState("+1");
   const [ContactNumber, setContactNumber] = useState(" ");
   const [Monthlyfee, setMonthlyfee] = useState("");
   const [DOB, setDOB] = useState("");
@@ -141,149 +175,175 @@ function Addstudent({ onClose, show }) {
       style={{ justifyContent: "flex-end", flex: 1, backgroundColor: "white" }}
     >
       <ScrollView Style={{ flex: 1 }}>
-        <View>
-          <Header title={"Add New Student"} onIconPress={onClose} />
-        </View>
-        <View>
-          <TouchableOpacity
-            style={{ alignItems: "center" }}
-            onPress={onImagePressed}
-          >
-            <View style={styles.pickImgCircle}>
-              <Image
-                source={{ uri: imageFromPicker || imageFromCamera }}
-                style={{ width: 100, height: 100, borderRadius: 50 }}
-                resizeMode={"contain"}
-              />
-            </View>
-          </TouchableOpacity>
-
-          <View style={styles.formCon}>
-            <Input
-              txtlabel={"Student Name"}
-              placeHold={"Student Name"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setstudentName}
-            />
-            <Input
-              txtlabel={"Father Name"}
-              placeHold={"Father Name"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setfatherName}
-            />
-            <Input
-              txtlabel={"Father NIC"}
-              placeHold={"Father NIC"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setfatherNIC}
-              inputtype={"numeric"}
-            />
-            <Text
-              style={{
-                fontSize: 16,
-                marginLeft: 10,
-                fontWeight: "bold",
-                textColor: "black",
-              }}
+        <LinearGradient
+          Style={{ flex: 1 }}
+          colors={["green", "#FFFFFF", "orange"]}
+        >
+          <View>
+            <Header title={"Add New Student"} onIconPress={onClose} />
+          </View>
+          <View>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={onImagePressed}
             >
-              Phone Number:
-            </Text>
+              <View style={styles.pickImgCircle}>
+                {/* <Ionicons name={"camera-sharp"} size={70} color={"white"} /> */}
+                <Image
+                  source={{ uri: imageFromPicker || imageFromCamera }}
+                  style={{ width: 100, height: 100, borderRadius: 50 }}
+                  resizeMode={"contain"}
+                />
+              </View>
+            </TouchableOpacity>
 
-            <PhoneInput
-              defaultCode="PK"
-              layout="first"
-              withShadow
-              autoFocus
-              containerStyle={{
-                // paddingHorizontal: 20,
-                height: 50,
-                // marginHorizontal: 10,
-                borderRadius: 20,
-                // marginVertical: 10,
-                flexDirection: "row",
-              }}
-              // textContainerStyle={{ paddingVertical: 0 }}
-              onChange={setContactNumber}
-            />
+            <View style={styles.formCon}>
+              <Input
+                txtlabel={"Student Name"}
+                placeHold={"Student Name"}
+                showIcon={true}
+                iconName={"pencil"}
+                onChange={setstudentName}
+              />
+              <Input
+                txtlabel={"Father Name"}
+                placeHold={"Father Name"}
+                showIcon={true}
+                iconName={"pencil"}
+                onChange={setfatherName}
+              />
+              <Input
+                txtlabel={"Father NIC"}
+                placeHold={"00000-0000000-0"}
+                showIcon={true}
+                iconName={"pencil"}
+                onChange={setfatherNIC}
+                inputtype={"numeric"}
+              />
+              <Text style={styles.inputtxtlabel}>Phone Number:</Text>
 
-            <Input
-              txtlabel={"Monthly Fee"}
-              placeHold={"Monthly Fee"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setMonthlyfee}
-              inputtype={"numeric"}
-            />
-            {/* <Input
+              <PhoneInput
+                defaultCode="PK"
+                layout="first"
+                // withShadow
+                // autoFocus
+                containerStyle={{
+                  // paddingHorizontal: 20,
+                  height: 50,
+                  // marginHorizontal: 10,
+                  borderRadius: 20,
+                  // marginVertical: 10,
+                  flexDirection: "row",
+                }}
+                placeholder={"300-0000000"}
+                // textContainerStyle={{ paddingVertical: 0 }}
+                onChangeText={setContactNumber}
+              />
+
+              <Input
+                txtlabel={"Monthly Fee"}
+                placeHold={"Monthly Fee"}
+                showIcon={true}
+                iconName={"pencil"}
+                onChange={setMonthlyfee}
+                inputtype={"numeric"}
+              />
+              {/* <Input
               txtlabel={"Date Of Birth"}
               placeHold={"Date Of Birth"}
               showIcon={true}
               iconName={"pencil"}
               onChange={setDOB}
             /> */}
-            <CheckBox
-              center
-              title="Male"
-              checkedIcon="dot-circle-o"
-              uncheckedIcon="circle-o"
-              checked={Gender}
-              onPress={() => setGender(!Gender)}
-            />
-            <Input
-              txtlabel={"Class"}
-              placeHold={"Class"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setClass}
-            />
-            <Input
-              txtlabel={"Address"}
-              placeHold={"Address"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setAddress}
-            />
-            <Input
-              txtlabel={"Section"}
-              placeHold={"Section"}
-              showIcon={true}
-              iconName={"pencil"}
-              onChange={setclassSection}
-            />
-            <Cusbutton
-              onBottomPress={onSubmit}
-              bgColor={"#3b5998"}
-              textColor={"black"}
-              text={"Add Student"}
-            />
-          </View>
 
-          <MediaPicker
-            show={isPickerShown}
-            onClose={onImagePressed}
-            onImagePickerSelected={(imageSelcted) => {
-              onImageCameFromGallery(imageSelcted);
-            }}
-            onCameraPressed={() => {
-              setIsCameraShown(!isCameraShown);
-            }}
-          />
-          <CustomCamera
-            show={isCameraShown}
-            onClose={() => setIsCameraShown(false)}
-            onPictureTaken={(response) => {
-              setIsCameraShown(false);
-              setIsPickerShown(false);
-              // if image came it will add the uri in our state
-              setImageFromCamera(response.uri);
-            }}
-          />
-          {showLoading && <Loading />}
-          <Toast />
-        </View>
+              <View>
+                <View>
+                  <Text style={styles.inputtxtlabel}>Select Gender</Text>
+                  <Picker
+                    style={styles.pickercon}
+                    selectedValue={Gender}
+                    onValueChange={(itemValue) => setGender(itemValue)}
+                  >
+                    {genderoption.map((item, index) => {
+                      return (
+                        <Picker.Item label={item} value={index} key={index} />
+                      );
+                    })}
+                  </Picker>
+                </View>
+              </View>
+              <View>
+                <View>
+                  <Text style={styles.inputtxtlabel}>Select Class</Text>
+                  <Picker
+                    style={styles.pickercon}
+                    selectedValue={Class}
+                    onValueChange={(itemValue) => setClass(itemValue)}
+                  >
+                    {classoption.map((item, index) => {
+                      return (
+                        <Picker.Item label={item} value={index} key={index} />
+                      );
+                    })}
+                  </Picker>
+                </View>
+              </View>
+              <View>
+                <View>
+                  <Text style={styles.inputtxtlabel}>Select Subject</Text>
+                  <Picker
+                    style={styles.pickercon}
+                    selectedValue={classSection}
+                    onValueChange={(itemValue) => setclassSection(itemValue)}
+                  >
+                    {subjectoption.map((item, index) => {
+                      return (
+                        <Picker.Item label={item} value={index} key={index} />
+                      );
+                    })}
+                  </Picker>
+                </View>
+              </View>
+              <Input
+                txtlabel={"Address"}
+                placeHold={"Address"}
+                showIcon={true}
+                iconName={"pencil"}
+                onChange={setAddress}
+              />
+
+              <Cusbutton
+                onBottomPress={onSubmit}
+                bgColor={"green"}
+                textColor={"black"}
+                text={"Add Student"}
+              />
+            </View>
+
+            <MediaPicker
+              show={isPickerShown}
+              onClose={onImagePressed}
+              onImagePickerSelected={(imageSelcted) => {
+                onImageCameFromGallery(imageSelcted);
+              }}
+              onCameraPressed={() => {
+                setIsCameraShown(!isCameraShown);
+              }}
+            />
+            <CustomCamera
+              show={isCameraShown}
+              onClose={() => setIsCameraShown(false)}
+              onPictureTaken={(response) => {
+                setIsCameraShown(false);
+                setIsPickerShown(false);
+                // if image came it will add the uri in our state
+                setImageFromCamera(response.uri);
+              }}
+            />
+            {showLoading && <Loading />}
+            <Toast />
+          </View>
+        </LinearGradient>
       </ScrollView>
     </Modal>
   );
@@ -299,12 +359,26 @@ const styles = StyleSheet.create({
     borderColor: "black",
   },
   pickImgCircle: {
-    backgroundColor: "orange",
+    backgroundColor: "black",
     width: 100,
     height: 100,
     borderRadius: 50,
     borderWidth: 4,
     borderColor: "white",
-    marginBottom: 10,
+    marginBottom: 20,
+  },
+  inputtxtlabel: {
+    fontWeight: "bold",
+    fontSize: 16,
+    marginLeft: 15,
+  },
+  pickercon: {
+    paddingHorizontal: 20,
+    height: 50,
+    backgroundColor: "rgba(255,255,255,0.8)",
+    marginHorizontal: 10,
+    borderRadius: 20,
+    marginVertical: 10,
+    flexDirection: "row",
   },
 });

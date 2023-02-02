@@ -16,7 +16,7 @@ import Teacher from "./scr/screen/Teacher/Teacher";
 import { StudentProfile } from "./scr/screen/student/studentprofile";
 import { TeacherProfile } from "./scr/screen/Teacher/TacherProfile";
 import { Attandance } from "./scr/screen/Attandance/Attandance";
-import { TeacherAttandance } from "./scr/screen/Attandance/Teacherattandance";
+import { TeacherAttandance } from "./scr/screen/Teacher/Teacherattandance";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { Search } from "./scr/screen/Search/Search";
 import Student from "./scr/screen/student/Student";
@@ -24,6 +24,9 @@ import { MapArea } from "./scr/components/MapArea";
 import { MyDrawer } from "./scr/screen/Navigation/MyDrawer";
 import CustomSidebarMenu from "./scr/components/CustomSidebarMenu";
 import { Mytab } from "./scr/screen/Navigation/Mytab";
+import { CallAttandance } from "./scr/screen/Teacher/CallAttandance";
+import { StdAttandancePage } from "./scr/screen/Attandance/StdAttandancePage";
+import { Showatudentattandance } from "./scr/screen/Attandance/Showatudentattandance";
 function App() {
   const Stack = createNativeStackNavigator();
 
@@ -117,6 +120,27 @@ function App() {
             headerTitleAlign: "center",
           }}
         />
+        <Stack.Screen
+          name="StdAttandancePage"
+          component={StdAttandancePage}
+          options={{
+            headerTitleAlign: "center",
+          }}
+        />
+        <Stack.Screen
+          name="CallAttandance"
+          component={CallAttandance}
+          options={{
+            headerTitleAlign: "center",
+          }}
+        />
+        {/* <Stack.Screen
+          name="Showatudentattandance"
+          component={Showatudentattandance}
+          options={{
+            headerTitleAlign: "center",
+          }}
+        /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );

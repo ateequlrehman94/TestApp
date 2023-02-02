@@ -197,7 +197,7 @@ function AddTeacher({ onClose, show }) {
             onBottomPress={onSubmit}
             bgColor={"#ff0000"}
             textColor={"black"}
-            text={"Add Student"}
+            text={"Add Teacher"}
           />
 
           <MediaPicker

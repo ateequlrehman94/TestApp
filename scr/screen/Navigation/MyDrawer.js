@@ -1,5 +1,14 @@
 import * as React from "react";
-import { Button, View } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+} from "react-native";
+
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { Home } from "../home/Home";
@@ -11,13 +20,16 @@ import Student from "../student/Student";
 import { StudentProfile } from "../student/studentprofile";
 import Teacher from "../Teacher/Teacher";
 import { TeacherProfile } from "../Teacher/TacherProfile";
-import { TeacherAttandance } from "../Attandance/Teacherattandance";
+import { TeacherAttandance } from "../Teacher/Teacherattandance";
 import { Attandance } from "../Attandance/Attandance";
 import { Setting } from "../setting/Setting";
+import { DrawerHeader } from "./drawerHeader";
 
 const Drawer = createDrawerNavigator();
 
 function MyDrawer() {
+  const { theme } = React.useState();
+  const ripple = TouchableNativeFeedback.Ripple("#adacac", false);
   return (
     <Drawer.Navigator>
       <Drawer.Screen name="Student" component={Student} />
@@ -34,4 +46,5 @@ function MyDrawer() {
     </Drawer.Navigator>
   );
 }
+
 export { MyDrawer };

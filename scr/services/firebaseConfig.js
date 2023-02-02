@@ -15,3 +15,5 @@ if (firebase.apps.length > 0 === false) {
   firebase.initializeApp(firebaseConfig);
 }
 export { firebase };
+// export const db = getFirestore(firebase.apps);
+// export const st = getStorage(firebase.apps);
